@@ -17,11 +17,12 @@ updater = Updater(token=settings.TELEGRAM_TOKEN, use_context=True)
 dispatcher = updater.dispatcher
 
 def run_bot():
-    logging.warning("IN RUN BOT")
-    token = settings.TELEGRAM_WEBHOOK_TOKEN
-    url = f"{settings.BASE_URL}messages/webhook/{token}/"
-    updater.bot.set_webhook(url)
-    logging.warning(f"IN RUN BOT - {url}")
+    try:
+        token = settings.TELEGRAM_WEBHOOK_TOKEN
+        url = f"{settings.BASE_URL}messages/webhook/{token}/"
+        updater.bot.set_webhook(url)
+    except Exception as e:
+        logging.warning('')
 
 def start(update: Update, context: CallbackContext):
     context.bot.send_message(chat_id=update.effective_chat.id,

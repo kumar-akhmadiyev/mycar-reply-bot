@@ -5,6 +5,8 @@ class TGBotConfig(AppConfig):
     name = 'tg_bot'
 
     def ready(self):
-        from .utils import run_bot
+        from django.conf import settings
+        from tg_bot.utils import run_bot
 
-        run_bot()
+        if not settings.TESTING:
+            run_bot()
