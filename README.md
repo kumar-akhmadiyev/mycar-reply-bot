@@ -1,13 +1,48 @@
-# Python: Getting Started
+# My Car Reply Bot
 
-A barebones Django app, which can easily be deployed to Heroku.
+Название бота - mycar_reply_bot. У него есть 2 команды - /start и /bind_token. Токен доступа будет в ответе при регистрации пользователя(access_token)
 
-This application supports the [Getting Started with Python on Heroku](https://devcenter.heroku.com/articles/getting-started-with-python) article - check it out for instructions on how to deploy this app to Heroku and also run it locally.
+Основной адрес, на котором расположено API - https://tranquil-atoll-68970.herokuapp.com/
 
-Alternatively, you can deploy it using this Heroku Button:
+Для всех запросов необходимо добавить header Content-Type(application/json). Для запросов, требующих авторизации - Authorization(тип токена Bearer)
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+### Регистрация пользователя
 
-For more information about using Python on Heroku, see these Dev Center articles:
+POST /users/register/
 
-- [Python on Heroku](https://devcenter.heroku.com/categories/python)
+Входящие параметры
+- username:string
+- password:string
+- password_confirm:string 
+- name:string
+
+### Авторизация
+
+POST /users/login/
+
+Входящие параметры
+- username:string
+- password:string
+
+### Отправка сообщений(требуется авторизация)
+
+POST /messages/send/
+
+Входящие параметры
+- text:string
+
+### Список отправленных сообщений(требуется авторизация)
+
+GET /messages/list/
+
+
+### Заключение
+
+Не успел сделать некоторые вещи, т.к. был загруз по работе и я до этого не работал с heroku. Ниже перечислю что по плану
+хотел еще сделать:
+- Вынести отправку сообщений в celery задачу
+- Изменить структуру - весь код вынести в отдельную папку(apps или src), в корневой папке оставить только настройки, 
+  CI/CD файлы, requirements и т.д.
+- Можно было бы добавить функцию для перегенерации токена доступа
+- Если бы это был production проект, то токены доступа лучше было бы вынести в отдельные сущности с контролем их 
+  активности, времени создания и т.д.
